@@ -1,0 +1,65 @@
+{
+  "categories": [
+    { "id": "electronics", "name": "Электроника", "description": "Смартфоны, ноутбуки, аксессуары" },
+    { "id": "clothing", "name": "Одежда", "description": "Футболки, джинсы, куртки" },
+    { "id": "books", "name": "Книги", "description": "Художественная и техническая литература" }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Смартфон XYZ Pro",
+      "price": 29990,
+      "category": "electronics",
+      "image": "https://via.placeholder.com/300x200?text=Phone",
+      "description": "Мощный смартфон с AMOLED-дисплеем и камерой 108 Мп",
+      "specs": {
+        "Экран": "6.7\" AMOLED",
+        "Память": "256 ГБ",
+        "Камера": "108 Мп",
+        "Батарея": "5000 мАч"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Ноутбук UltraBook 15",
+      "price": 89990,
+      "category": "electronics",
+      "image": "https://via.placeholder.com/300x200?text=Laptop",
+      "description": "Лёгкий и производительный ноутбук для работы и развлечений",
+      "specs": {
+        "Процессор": "Intel Core i7",
+        "ОЗУ": "16 ГБ",
+        "SSD": "512 ГБ",
+        "Вес": "1.8 кг"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Футболка Classic Cotton",
+      "price": 1290,
+      "category": "clothing",
+      "image": "https://via.placeholder.com/300x200?text=T-Shirt",
+      "description": "Удобная футболка из 100% хлопка, подходит для повседневной носки",
+      "specs": {
+        "Материал": "100% хлопок",
+        "Размеры": "S, M, L, XL",
+        "Цвета": "Чёрный, Белый, Синий",
+        "Уход": "Машинная стирка 30°C"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Книга: Изучаем JavaScript",
+      "price": 1890,
+      "category": "books",
+      "image": "https://via.placeholder.com/300x200?text=Book",
+      "description": "Практическое руководство по современному JavaScript для начинающих",
+      "specs": {
+        "Автор": "А. Петров",
+        "Страниц": "450",
+        "Год": "2024",
+        "Язык": "Русский"
+      }
+    }
+  ]
+}
