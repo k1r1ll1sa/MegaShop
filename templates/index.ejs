@@ -3,14 +3,30 @@
     <head>
         <title>Главная</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/styles.css">
     </head>
     <body>
-        <h1>MEGASHOP</h1>
-        <div>
-            <a href="/products">Все товары</a>
-        </div>
-        <div>
-            <a href="/categories">Категории</a>
-        </div>
+        <%- include('partials/header') %>
+        <main>
+            <div class="container">
+                <h1 style="justify-self: center;">MEGASHOP</h1>
+                <div class="main-grid">
+                    <article class="index_element">
+                        <a href="/products">
+                            <img src="/images/products.jpg" alt="Все товары">
+                            <h3>Все товары</h3>
+                        </a>
+                    </article>
+
+                    <article class="index_element">
+                        <a href="/categories">
+                            <img src="/images/categories.jpg" alt="Категории">
+                            <h3>Категории</h3>
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </main>
+        <%- include('partials/footer') %>
     </body>
 </html>

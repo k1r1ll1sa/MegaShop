@@ -3,11 +3,13 @@ const catRouter = express.Router();
 
 // Обработка конкретной категории
 catRouter.get("/:id", function(req, res){
-  let categoryId = parseInt(req.params.id);
+  let categoryId = req.params.id;
   let categoryInfo = res.locals.data.categories.find(c => c.id === categoryId);
 
   if (!categoryInfo){
-    res.status(404).render("not_found");
+    res.status(404).render("not_found", {
+      message: "Категория не найдена!"
+    });
   };
 
   let products = res.locals.data.products.filter(p => p.category === categoryId);

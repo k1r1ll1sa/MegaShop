@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>404</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+      <%- include('partials/header') %>
+      <section class="404">
+        <div class="container">
+          <h1>Ошибка</h1>
+          <% if (message) { %>
+            <h2><%= message %></h2>
+          <% } else { %>
+            <h2>Неизвестная ошибка</h2>
+          <% }; %>
+        </div>
+      </section>
+    </body>
+</html>

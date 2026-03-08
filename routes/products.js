@@ -8,7 +8,9 @@ productRouter.get("/:id", function(req, res){
   let productInfo = res.locals.data.products.find(p => p.id === productId);
 
   if (!productInfo){
-    res.status(404).render("not_found");
+    res.status(404).render("not_found", {
+      message: "Товар не найден"
+    });
   };
 
   res.render("product", {
@@ -16,7 +18,7 @@ productRouter.get("/:id", function(req, res){
   });
 });
 
-// Обработка страницы всех
+// Обработка страницы всех товаров
 productRouter.get("/", function(req, res){
   res.render("products", {
     products: res.locals.data.products

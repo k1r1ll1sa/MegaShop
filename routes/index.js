@@ -1,7 +1,7 @@
 const express = require("express");
 const indexRouter = express.Router();
 
-indexRouter.use("/", function (req, res){
+indexRouter.get("/", function (req, res){
   res.render("index");
 });
 

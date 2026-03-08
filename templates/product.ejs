@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= product.name %></title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+      <%- include('partials/header') %>
+      <section class="product-page">
+        <div class="container">
+          <a href="/products" class="back-link">← Назад к товарам</a>
+          
+          <div class="product-layout">
+            <div class="product_img">
+              <img src="<%= product.image %>" alt="<%= product.name %>">
+            </div>
+
+            <div class="product-info">
+              <h1><%= product.name %></h1>
+              <p class="price-large"><%= product.price %> Руб.</p>
+              <p class="description"><%= product.description %></p>
+
+              <h2>Характеристики</h2>
+              <div class="product-specs">
+                <% Object.entries(product.specs).forEach(([key, value]) => { %>
+                  <div class="spec-row">
+                    <dt><%= key %></dt>
+                    <dd><%= value %></dd>
+                  </div>
+                <% }) %>
+              </div>
+
+              <div class="buy-btn-container">
+                <button class="buy-btn">Добавить в корзину</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> 
+      <%- include('partials/footer') %> 
+    </body>
+</html>

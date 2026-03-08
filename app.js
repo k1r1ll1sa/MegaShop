@@ -26,7 +26,9 @@ app.use("/products", require("./routes/products"));
 app.use("/", require("./routes/index"));
 
 app.use((req, res) => {
-  res.status(404).render("not_found");
+  res.status(404).render("not_found", {
+    message: "Страница не найдена"
+  });
 })
 
 app.listen(3000);

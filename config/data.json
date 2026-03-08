@@ -1,8 +1,8 @@
 {
   "categories": [
-    { "id": "electronics", "name": "Электроника", "description": "Смартфоны, ноутбуки, аксессуары" },
-    { "id": "clothing", "name": "Одежда", "description": "Футболки, джинсы, куртки" },
-    { "id": "books", "name": "Книги", "description": "Художественная и техническая литература" }
+    { "id": "electronics", "name": "Электроника", "image": "/images/placeholder.jpg", "description": "Смартфоны, ноутбуки, аксессуары" },
+    { "id": "clothing", "name": "Одежда", "image": "/images/placeholder.jpg", "description": "Футболки, джинсы, куртки" },
+    { "id": "books", "name": "Книги","image": "/images/placeholder.jpg", "description": "Художественная и техническая литература" }
   ],
   "products": [
     {
