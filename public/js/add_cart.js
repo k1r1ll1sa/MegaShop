@@ -8,23 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => { messageDiv.textContent = ''; }, 3000);
     }
 
-    function updateCartBadge(newCount) {
-        let badge = document.getElementById('cart-badge');
-        const cartLink = document.querySelector('.cart-link');
-
-        if (newCount > 0) {
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.id = 'cart-badge';
-                badge.className = 'cart-badge';
-                cartLink?.appendChild(badge);
-            }
-            badge.textContent = newCount;
-        } else if (badge) {
-            badge.remove();
-        }
-    }
-
     addToCartBtn?.addEventListener('click', async function() {
         const productId = this.dataset.productId;
 
@@ -44,12 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (result.success) {
                 showMessage('Товар добавлен в корзину');
-                this.textContent = 'В корзине ✓';
-                this.disabled = true;
-
-                if (result.cartCount) {
-                    updateCartBadge(result.cartCount);
-                }
+                setTimeout(() => { window.location.reload(); }, 500);
             } else if (result.redirect) {
                 showMessage('Сначала войдите в аккаунт', true);
                 setTimeout(() => { window.location.href = '/login'; }, 1500);

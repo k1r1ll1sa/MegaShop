@@ -14,7 +14,7 @@
                 </a>
                 <a href="/logout" id="logout-link" class="nav-link">Выйти</a>
             <% } else { %>
-                <a href="/login" class="nav-link">Войти</a>
+                <a href="/register" class="nav-link">Войти</a>
             <% } %>
         </nav>
     </div>
@@ -23,15 +23,9 @@
     <script>
         document.getElementById('logout-link')?.addEventListener('click', async (e) => {
             e.preventDefault();
-            try {
-                const res = await fetch('/logout', { method: 'POST' });
-                const result = await res.json();
-                if (result.success) {
-                    window.location.href = '/';
-                }
-            } catch (e) {
-                console.error('Ошибка выхода:', e);
-            }
+            const res = await fetch('/logout', { method: 'POST' });
+            const result = await res.json();
+            if (result.success) window.location.href = '/';
         });
     </script>
 <% } %>
