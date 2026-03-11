@@ -24,12 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             showMessage('Некорректный формат email');
             return;
         }
-        if (password.length < 6) {
-            showMessage('Пароль должен содержать минимум 6 символов');
-            return;
-        }
-
-        showMessage('Вход...');
 
         try {
             const hashedPassword = hashPassword(password);

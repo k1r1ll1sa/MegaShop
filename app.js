@@ -46,28 +46,20 @@ app.use((req, res, next) => {
 // счётчик товаров в коризне
 app.use(async (req, res, next) => {
   try {
-    const dataRaw = await fs.readFile(path.join(__dirname, "config", "data.json"), "utf-8");
-    const data = JSON.parse(dataRaw);
-    res.locals.data = data;
+    const data = await fs.readFile(path.join(__dirname, "config", "data.json"), "utf-8");
+    const parsed = JSON.parse(data);
+    res.locals.data = parsed;
 
     let cartCount = 0;
-
-    if (req.session?.user?.email) {
-      const user = data.users?.find(u =>
-          u.email?.trim().toLowerCase() === req.session.user.email.trim().toLowerCase()
-      );
-
-      if (user) {
-        cartCount = user.cart_length || 0;
-      }
+    if (req.session?.cart) {
+      cartCount = req.session.cart.length;
     }
 
     res.locals.cartCount = cartCount;
     res.locals.session = req.session;
-
     next();
   } catch (err) {
-    console.error("Ошибка загрузки данных:", err);
+    console.error(err);
     res.locals.cartCount = 0;
     res.locals.session = req.session;
     next();

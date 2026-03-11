@@ -9,42 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Обработчик удаления товара
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const productId = this.dataset.productId;
-            const cartItem = this.closest('.cart-item');
 
-            if (!confirm('Удалить этот товар из корзины?')) {
-                return;
-            }
+            if (!confirm('Удалить товар?')) return;
 
             try {
                 const response = await fetch(`/cart/remove/${productId}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' }
+                    method: 'DELETE'
                 });
 
                 const result = await response.json();
 
                 if (result.success) {
                     showMessage('Товар удалён');
-
-                    if (cartItem) {
-                        cartItem.style.opacity = '0';
-                        cartItem.style.transform = 'translateX(-20px)';
-                        cartItem.style.transition = 'all 0.3s';
-                        setTimeout(() => {
-                            cartItem.remove();
-
-                            // Если корзина пустая
-                            if (document.querySelectorAll('.cart-item').length === 0) {
-                                location.reload();
-                            }
-                        }, 300);
-                    }
+                    setTimeout(() => { window.location.reload(); }, 500);
                 } else {
-                    showMessage((result.message || 'Ошибка'), true);
+                    showMessage(result.message || 'Ошибка', true);
                 }
             } catch (error) {
                 console.error('Ошибка:', error);

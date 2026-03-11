@@ -26,30 +26,34 @@ loginRouter.post("/", async function(req, res){
         const data = JSON.parse(dataRaw);
 
         // Поиск пользователя
-        const user = data.users?.find(u =>
-            u.email?.trim().toLowerCase() === email.trim().toLowerCase()
-        );
+        const user = data.users?.find(u => {
+            const userEmail = u["email"] || u["email "] || "";
+            return userEmail.trim().toLowerCase() === email.trim().toLowerCase();
+        });
 
         if (!user) {
             return res.json({ success: false, message: "Пользователь не найден" });
         }
 
         // Сравнение пароля
-        const isMatch = await bcrypt.compare(password, user.password);
+        const userPassword = user["password"] || user["password "] || "";
+        const isMatch = await bcrypt.compare(password, userPassword);
 
         if (isMatch) {
-            // сохранение сессии
+            // Сохраняем пользователя в сессию
             req.session.user = {
-                login: user.login,
-                email: user.email
+                login: user["login"] || user["login "],
+                email: user["email"] || user["email "]
             };
 
-            console.log('Сессия создана:', req.session.user);
+            req.session.cart = [];
+
+            console.log('Вход выполнен:', req.session.user);
 
             res.json({
                 success: true,
                 message: "Вход выполнен",
-                user: { login: user.login, email: user.email }
+                user: { login: req.session.user.login, email: req.session.user.email }
             });
         } else {
             res.json({ success: false, message: "Неверный пароль" });
@@ -60,5 +64,6 @@ loginRouter.post("/", async function(req, res){
         res.status(500).json({ success: false, message: "Ошибка сервера" });
     }
 });
+
 
 module.exports = loginRouter;

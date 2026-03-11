@@ -1,8 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const messageDiv = document.getElementById('cart-message');
+
+    function showMessage(text, isError = false) {
+        if (messageDiv) {
+            messageDiv.textContent = text;
+            messageDiv.style.color = isError ? 'red' : 'green';
+            setTimeout(() => { messageDiv.textContent = ''; }, 3000);
+        }
+    }
+
     document.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
             const productId = this.dataset.productId;
-            const cartItem = this.closest('.cart-item');
 
             if (!confirm('Удалить товар?')) return;
 
@@ -14,28 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const result = await response.json();
 
                 if (result.success) {
-                    const badge = document.getElementById('cart-badge');
-                    if (result.cartCount !== undefined) {
-                        if (result.cartCount > 0) {
-                            if (badge) {
-                                badge.textContent = result.cartCount;
-                            }
-                        } else if (badge) {
-                            badge.remove();
-                        }
-                    }
-
-                    // Удаляем элемент из списка
-                    if (cartItem) {
-                        cartItem.remove();
-
-                        if (!document.querySelector('.cart-item')) {
-                            setTimeout(() => location.reload(), 500);
-                        }
-                    }
+                    showMessage('Товар удалён');
+                    setTimeout(() => { window.location.reload(); }, 500);
+                } else {
+                    showMessage(result.message || 'Ошибка', true);
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
+                showMessage('Ошибка соединения', true);
             }
         });
     });

@@ -15,17 +15,10 @@ cartRouter.get("/", async function(req, res) {
         const rawData = await fs.readFile(DATA_FILE, "utf-8");
         const data = JSON.parse(rawData);
 
-        // Поиск пользователя
-        const user = data.users?.find(u =>
-            u.email?.trim().toLowerCase() === req.session.user.email.trim().toLowerCase()
-        );
-
-        if (!user) {
-            return res.status(404).send("Пользователь не найден");
-        }
+        const cartIds = req.session.cart || [];
 
         // Получаем товары из корзины
-        const cartItems = data.products?.filter(p => user.cart?.includes(p.id)) || [];
+        const cartItems = data.products?.filter(p => cartIds.includes(p.id)) || [];
         const total = cartItems.reduce((sum, p) => sum + p.price, 0);
 
         res.render("cart", {
@@ -44,6 +37,7 @@ cartRouter.post("/add", async function(req, res) {
     try {
         const { productId } = req.body;
 
+        // Проверка сессии
         if (!req.session || !req.session.user) {
             return res.json({ success: false, redirect: true, message: "Требуется авторизация" });
         }
@@ -52,42 +46,32 @@ cartRouter.post("/add", async function(req, res) {
             return res.status(400).json({ success: false, message: "Не указан товар" });
         }
 
-        const rawData = await fs.readFile(DATA_FILE, "utf-8");
-        const data = JSON.parse(rawData);
-
-        const userIndex = data.users?.findIndex(u =>
-            u.email?.trim().toLowerCase() === req.session.user.email.trim().toLowerCase()
-        );
-
-        if (userIndex === -1) {
-            return res.status(404).json({ success: false, message: "Пользователь не найден" });
+        if (!req.session.cart) {
+            req.session.cart = [];
         }
 
+        // Проверка наличия в корзине
+        if (req.session.cart.includes(productId)) {
+            return res.json({ success: false, message: "Товар уже в корзине" });
+        }
+
+        // Проверка наличия товара в products
+        const rawData = await fs.readFile(DATA_FILE, "utf-8");
+        const data = JSON.parse(rawData);
         const product = data.products?.find(p => p.id === productId);
+
         if (!product) {
             return res.status(404).json({ success: false, message: "Товар не найден" });
         }
 
-        const user = data.users[userIndex];
-        if (!user.cart) user.cart = [];
+        req.session.cart.push(productId);
 
-        if (user.cart.includes(productId)) {
-            return res.json({ success: false, message: "Товар уже в корзине" });
-        }
-
-        // Добавляем товар
-        user.cart.push(productId);
-        user.cart_length = user.cart.length;
-
-        data.users[userIndex] = user;
-        await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
-
-        console.log(`Товар ${productId} добавлен. cart_length: ${user.cart_length}`);
+        console.log(`Товар ${productId} добавлен. Корзина в сессии: ${req.session.cart.length}`);
 
         res.json({
             success: true,
             message: "Товар добавлен в корзину",
-            cartCount: user.cart_length
+            cartCount: req.session.cart.length
         });
 
     } catch (err) {
@@ -104,40 +88,23 @@ cartRouter.delete("/remove/:productId", async function(req, res) {
             return res.status(401).json({ success: false, message: "Требуется авторизация" });
         }
 
-        const rawData = await fs.readFile(DATA_FILE, "utf-8");
-        const data = JSON.parse(rawData);
-
-        const userIndex = data.users?.findIndex(u =>
-            u.email?.trim().toLowerCase() === req.session.user.email.trim().toLowerCase()
-        );
-
-        if (userIndex === -1) {
-            return res.status(404).json({ success: false, message: "Пользователь не найден" });
-        }
-
-        const user = data.users[userIndex];
-        if (!user.cart) {
+        if (!req.session.cart) {
             return res.json({ success: true, message: "Корзина пуста" });
         }
 
-        const initialLength = user.cart.length;
-        user.cart = user.cart.filter(id => id !== productId);
+        const initialLength = req.session.cart.length;
+        req.session.cart = req.session.cart.filter(id => id !== productId);
 
-        if (user.cart.length === initialLength) {
+        if (req.session.cart.length === initialLength) {
             return res.status(404).json({ success: false, message: "Товар не найден в корзине" });
         }
 
-        user.cart_length = user.cart.length;
-
-        data.users[userIndex] = user;
-        await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
-
-        console.log(`Товар ${productId} удалён. cart_length: ${user.cart_length}`);
+        console.log(`Товар ${productId} удалён. Корзина в сессии: ${req.session.cart.length}`);
 
         res.json({
             success: true,
             message: "Товар удалён",
-            cartCount: user.cart_length
+            cartCount: req.session.cart.length
         });
 
     } catch (err) {

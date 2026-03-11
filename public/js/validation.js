@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const hashedPassword = hashPassword(password);
-        alert('✅ Регистрация успешна! (тест)');
+        alert('Регистрация успешна! (тест)');
 
         try {
             const response = await fetch('/register/api/register', {
