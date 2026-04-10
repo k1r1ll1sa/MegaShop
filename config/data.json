@@ -105,6 +105,19 @@
       "email": "ivan@example.com",
       "password": "$2b$10$zRAuS3GyPpSZIL1SkU3zAelfEs4o9sRzA9O8vP/kPtZRScuOvYXOC",
       "cart": []
+    },
+    {
+      "login": "testuser1",
+      "email": "testuser1@gmail.com",
+      "password": "$2b$10$WlRicv.MEV8K4RMBNfH5ruz3jxl83syT2Z/vExGvEC6I4DG7raQ/.",
+      "cart": []
+    },
+    {
+      "login": "testuser2",
+      "name": "testuser2",
+      "email": "testuser2@gmail.com",
+      "password": "$2b$10$h.F0hzfxv7Wl2325d9EPcuLeLaG8.nLo.TJgFBci41tHN2fdRxSLS",
+      "cart": []
     }
   ]
 }

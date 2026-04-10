@@ -67,14 +67,14 @@ app.use(async (req, res, next) => {
 });
 
 //Роуты
-app.use("/api", require("./routes/api"));
-app.use("/categories", require("./routes/categories"));
-app.use("/products", require("./routes/products"));
-app.use("/register", require("./routes/register"));
-app.use("/login", require("./routes/login"));
-app.use("/logout", require("./routes/logout"));
-app.use("/cart", require("./routes/cart"));
-app.use("/", require("./routes/index"));
+app.use("/api", require("./routes/api/api"));
+app.use("/categories", require("./routes/views/categories"));
+app.use("/products", require("./routes/views/products"));
+app.use("/register", require("./routes/views/register"));
+app.use("/login", require("./routes/views/login"));
+app.use("/logout", require("./routes/views/logout"));
+app.use("/cart", require("./routes/views/cart"));
+app.use("/", require("./routes/views/index"));
 
 app.use((req, res) => {
   res.status(404).render("not_found", {

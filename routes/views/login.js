@@ -4,7 +4,6 @@ const loginRouter = express.Router();
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
 const path = require("path");
-const DATA_FILE = path.join(__dirname, "../config", "data.json");
 
 // GET - отображение страницы входа
 loginRouter.get("/", function(req, res){
@@ -22,11 +21,8 @@ loginRouter.post("/", async function(req, res){
             return res.status(400).json({ success: false, message: "Заполните все поля" });
         }
 
-        const dataRaw = await fs.readFile(DATA_FILE, "utf-8");
-        const data = JSON.parse(dataRaw);
-
         // Поиск пользователя
-        const user = data.users?.find(u => {
+        const user = res.locals.data.users?.find(u => {
             const userEmail = u["email"] || u["email "] || "";
             return userEmail.trim().toLowerCase() === email.trim().toLowerCase();
         });

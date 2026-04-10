@@ -3,7 +3,7 @@ const express = require("express");
 const cartRouter = express.Router();
 const fs = require("fs").promises;
 const path = require("path");
-const DATA_FILE = path.join(__dirname, "../config", "data.json");
+const DATA_FILE = path.join(__dirname, "../../config", "data.json");
 
 cartRouter.get("/", async function(req, res) {
     try {
