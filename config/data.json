@@ -118,6 +118,26 @@
       "email": "testuser2@gmail.com",
       "password": "$2b$10$h.F0hzfxv7Wl2325d9EPcuLeLaG8.nLo.TJgFBci41tHN2fdRxSLS",
       "cart": []
+    },
+    {
+      "login": "testuser3",
+      "email": "testuser3@gmail.com",
+      "password": "$2b$10$7bRL4CauloRK7hJXgeRUf.zH3HGkdoD6kn7R/8vHWWLf.frhypdQ.",
+      "cart": []
+    },
+    {
+      "login": "testuser4",
+      "name": "testuser4",
+      "email": "testuser4@gmail.com",
+      "password": "$2b$10$Cx2Ak407UqqhAna9ug5Cj.JZPk4AKG3c1wVpM1nG5/m089IaHHt0m",
+      "cart": []
+    },
+    {
+      "login": "testuser5",
+      "name": "testuser5",
+      "email": "testuser5@gmail.com",
+      "password": "$2b$10$ZAqTCyPanxZnBjHX0ULfyeFvIKF1hcgfcnW9GnUT3GKd6MxyVzxQq",
+      "cart": []
     }
   ]
 }

@@ -31,8 +31,16 @@
                                 <img src="<%= item.image %>" alt="<%= item.name %>" class="cart-item-img">
                                 <div class="cart-item-details">
                                     <h3><%= item.name %></h3>
-                                    <p class="cart-item-price"><%= item.price %> Руб.</p>
+                                    <p class="cart-item-price"><%= item.price %> Руб. × <%= item.quantity %> шт.</p>
                                     <p class="cart-item-desc"><%= item.description %></p>
+                                    <div class="quantity-control">
+                                        <button class="qty-btn qty-minus" data-product-id="<%= item.id %>">−</button>
+                                        <span class="qty-value"><%= item.quantity %></span>
+                                        <button class="qty-btn qty-plus" data-product-id="<%= item.id %>">+</button>
+                                    </div>
+                                    <p class="cart-item-line-total">
+                                        Сумма: <strong><%= item.lineTotal %> ₽</strong>
+                                    </p>
                                 </div>
                             </div>
                             <button class="remove-btn" data-product-id="<%= item.id %>">🗑️Удалить</button>
@@ -40,7 +48,7 @@
                     <% }) %>
                 </div>
                 <div class="cart-summary">
-                    <p class="cart-total">Итого: <strong><%= total %> Руб.</strong></p>
+                    <p class="cart-total">Итого: <strong id="cart-total"><%= total %> Руб.</strong></p>
                 </div>
 
             <% } %>
@@ -49,6 +57,6 @@
     </main>
     <%- include('partials/footer') %>
 </div>
-<script src="/js/del_cart.js"></script>
+<script src="/js/cart.js"></script>
 </body>
 </html>

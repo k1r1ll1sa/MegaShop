@@ -5,6 +5,11 @@ const fs = require("fs").promises;
 const path = require("path");
 const DATA_FILE = path.join(__dirname, "../../config", "data.json");
 
+async function readData() {
+  const raw = await fs.readFile(DATA_FILE, "utf-8");
+  return JSON.parse(raw);
+}
+
 cartRouter.get("/", async function(req, res) {
     try {
         // Проверка сессии
@@ -12,14 +17,24 @@ cartRouter.get("/", async function(req, res) {
             return res.redirect('/login');
         }
 
-        const rawData = await fs.readFile(DATA_FILE, "utf-8");
-        const data = JSON.parse(rawData);
+        const data = await readData();
+        const products = data.products || [];
 
-        const cartIds = req.session.cart || [];
+        const apiCart = Array.isArray(req.session.apiCart) ? req.session.apiCart : [];
 
-        // Получаем товары из корзины
-        const cartItems = data.products?.filter(p => cartIds.includes(p.id)) || [];
-        const total = cartItems.reduce((sum, p) => sum + p.price, 0);
+        const cartItems = apiCart
+            .map(item => {
+              const product = products.find(p => p.id === item.productId);
+              if (!product) return null;
+              return {
+                ...product,
+                quantity: item.quantity || 1,
+                lineTotal: product.price * (item.quantity || 1)
+              };
+            })
+            .filter(Boolean);
+        
+        const total = cartItems.reduce((sum, item) => sum + item.lineTotal, 0);
 
         res.render("cart", {
             cartItems,
@@ -30,86 +45,6 @@ cartRouter.get("/", async function(req, res) {
     } catch (err) {
         console.error("Ошибка загрузки корзины:", err);
         res.status(500).send("Ошибка сервера");
-    }
-});
-
-cartRouter.post("/add", async function(req, res) {
-    try {
-        const { productId } = req.body;
-
-        // Проверка сессии
-        if (!req.session || !req.session.user) {
-            return res.json({ success: false, redirect: true, message: "Требуется авторизация" });
-        }
-
-        if (!productId) {
-            return res.status(400).json({ success: false, message: "Не указан товар" });
-        }
-
-        if (!req.session.cart) {
-            req.session.cart = [];
-        }
-
-        // Проверка наличия в корзине
-        if (req.session.cart.includes(productId)) {
-            return res.json({ success: false, message: "Товар уже в корзине" });
-        }
-
-        // Проверка наличия товара в products
-        const rawData = await fs.readFile(DATA_FILE, "utf-8");
-        const data = JSON.parse(rawData);
-        const product = data.products?.find(p => p.id === productId);
-
-        if (!product) {
-            return res.status(404).json({ success: false, message: "Товар не найден" });
-        }
-
-        req.session.cart.push(productId);
-
-        console.log(`Товар ${productId} добавлен. Корзина в сессии: ${req.session.cart.length}`);
-
-        res.json({
-            success: true,
-            message: "Товар добавлен в корзину",
-            cartCount: req.session.cart.length
-        });
-
-    } catch (err) {
-        console.error("Ошибка добавления:", err);
-        res.status(500).json({ success: false, message: "Ошибка сервера" });
-    }
-});
-
-cartRouter.delete("/remove/:productId", async function(req, res) {
-    try {
-        const productId = parseInt(req.params.productId);
-
-        if (!req.session || !req.session.user) {
-            return res.status(401).json({ success: false, message: "Требуется авторизация" });
-        }
-
-        if (!req.session.cart) {
-            return res.json({ success: true, message: "Корзина пуста" });
-        }
-
-        const initialLength = req.session.cart.length;
-        req.session.cart = req.session.cart.filter(id => id !== productId);
-
-        if (req.session.cart.length === initialLength) {
-            return res.status(404).json({ success: false, message: "Товар не найден в корзине" });
-        }
-
-        console.log(`Товар ${productId} удалён. Корзина в сессии: ${req.session.cart.length}`);
-
-        res.json({
-            success: true,
-            message: "Товар удалён",
-            cartCount: req.session.cart.length
-        });
-
-    } catch (err) {
-        console.error("Ошибка удаления:", err);
-        res.status(500).json({ success: false, message: "Ошибка сервера" });
     }
 });
 

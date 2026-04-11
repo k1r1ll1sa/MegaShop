@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.style.color = isError ? 'red' : 'green';
     }
 
-    function hashPassword(password) {
-        return CryptoJS.SHA256(password).toString();
-    }
-
     async function handleLogin() {
         const email = emailInput.value.trim();
         const password = passwordInput.value;
@@ -26,22 +22,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const hashedPassword = hashPassword(password);
-
-            const response = await fetch('/login', {
+            const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password: hashedPassword})
+                credentials: 'same-origin',
+                body: JSON.stringify({ email, password})
             });
 
             const result = await response.json();
 
-            if (result.success) {
+            if (response.ok) {
                 showMessage('Успешный вход!', false);
                 // Перенаправление или сохранение сессии
                 setTimeout(() => {
                     window.location.href = '/';
                 }, 1000);
+            } else if (response.status === 401) {
+                showMessage(result.message || 'Неверный email или пароль');
             } else {
                 showMessage(result.message || 'Ошибка входа');
             }

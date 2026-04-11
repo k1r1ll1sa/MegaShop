@@ -51,8 +51,8 @@ app.use(async (req, res, next) => {
     res.locals.data = parsed;
 
     let cartCount = 0;
-    if (req.session?.cart) {
-      cartCount = req.session.cart.length;
+    if (req.session?.apiCart) {
+      cartCount = req.session.apiCart.reduce((acc, item) => acc + item.quantity, 0);
     }
 
     res.locals.cartCount = cartCount;
@@ -67,13 +67,13 @@ app.use(async (req, res, next) => {
 });
 
 //Роуты
-app.use("/api", require("./routes/api/api"));
 app.use("/categories", require("./routes/views/categories"));
 app.use("/products", require("./routes/views/products"));
 app.use("/register", require("./routes/views/register"));
 app.use("/login", require("./routes/views/login"));
 app.use("/logout", require("./routes/views/logout"));
 app.use("/cart", require("./routes/views/cart"));
+app.use("/api", require("./routes/api/api"));
 app.use("/", require("./routes/views/index"));
 
 app.use((req, res) => {
