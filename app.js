@@ -71,7 +71,6 @@ app.use("/categories", require("./routes/views/categories"));
 app.use("/products", require("./routes/views/products"));
 app.use("/register", require("./routes/views/register"));
 app.use("/login", require("./routes/views/login"));
-app.use("/logout", require("./routes/views/logout"));
 app.use("/cart", require("./routes/views/cart"));
 app.use("/api", require("./routes/api/api"));
 app.use("/", require("./routes/views/index"));
