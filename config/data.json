@@ -138,6 +138,133 @@
       "email": "testuser5@gmail.com",
       "password": "$2b$10$ZAqTCyPanxZnBjHX0ULfyeFvIKF1hcgfcnW9GnUT3GKd6MxyVzxQq",
       "cart": []
+    },
+    {
+      "login": "username",
+      "name": "username",
+      "email": "username@mail.ru",
+      "password": "$2b$10$aHYKeaPypP03IWG95XifBug86FJEIzAhqBDY3kygef6op2LPSq2Pi",
+      "cart": []
+    },
+    {
+      "login": "testerovshik",
+      "name": "testerovshik",
+      "email": "testerovshik@mail.ru",
+      "password": "$2b$10$6A2hO6konDl7ZrwHhiRlK.yHY7xN27YcsJuGYNBlvx4re7Mpo6odG",
+      "cart": []
     }
-  ]
+  ],
+  "chatHistory": {
+    "general": [
+      {
+        "id": 1776351920307,
+        "text": "Hiii",
+        "username": "Гость",
+        "userId": null,
+        "room": "general",
+        "timestamp": "2026-04-16T15:05:20.307Z"
+      },
+      {
+        "id": 1776351946897,
+        "text": "Чё",
+        "username": "username",
+        "userId": 11,
+        "room": "general",
+        "timestamp": "2026-04-16T15:05:46.897Z"
+      },
+      {
+        "id": 1776353240886,
+        "text": "Да так",
+        "username": "Гость",
+        "userId": null,
+        "room": "general",
+        "timestamp": "2026-04-16T15:27:20.886Z"
+      },
+      {
+        "id": 1776353257309,
+        "text": "Бывает",
+        "username": "username",
+        "userId": 11,
+        "room": "general",
+        "timestamp": "2026-04-16T15:27:37.309Z"
+      }
+    ],
+    "support": [
+      {
+        "id": 1776351954107,
+        "text": "ПОМОГИТЕ",
+        "username": "username",
+        "userId": 11,
+        "room": "support",
+        "timestamp": "2026-04-16T15:05:54.107Z"
+      },
+      {
+        "id": 1776351969450,
+        "text": "Да чёто не хочу пока",
+        "username": "testerovshik",
+        "userId": 12,
+        "room": "support",
+        "timestamp": "2026-04-16T15:06:09.450Z"
+      },
+      {
+        "id": 1776352033811,
+        "text": "ну пж",
+        "username": "username",
+        "userId": 11,
+        "room": "support",
+        "timestamp": "2026-04-16T15:07:13.811Z"
+      },
+      {
+        "id": 1776352048406,
+        "text": ":(",
+        "username": "username",
+        "userId": 11,
+        "room": "support",
+        "timestamp": "2026-04-16T15:07:28.406Z"
+      },
+      {
+        "id": 1776352513783,
+        "text": "ПАМАГИТИ МНЕ ЛУШЕ",
+        "username": "Гость",
+        "userId": null,
+        "room": "support",
+        "timestamp": "2026-04-16T15:15:13.783Z"
+      }
+    ],
+    "products-discussion": [
+      {
+        "id": 1776352446819,
+        "text": "Ну такой себе товарчик",
+        "username": "Гость",
+        "userId": null,
+        "room": "products-discussion",
+        "timestamp": "2026-04-16T15:14:06.819Z"
+      },
+      {
+        "id": 1776352460549,
+        "text": "Чё ещё скажешь умник",
+        "username": "Гость",
+        "userId": null,
+        "room": "products-discussion",
+        "timestamp": "2026-04-16T15:14:20.549Z"
+      },
+      {
+        "id": 1776352491819,
+        "text": "ну вы реально глупые",
+        "username": "testerovshik",
+        "userId": 12,
+        "room": "products-discussion",
+        "timestamp": "2026-04-16T15:14:51.819Z"
+      },
+      {
+        "id": 1776352504068,
+        "text": "а сам то чё",
+        "username": "username",
+        "userId": 11,
+        "room": "products-discussion",
+        "timestamp": "2026-04-16T15:15:04.068Z"
+      }
+    ],
+    "random": []
+  }
 }
