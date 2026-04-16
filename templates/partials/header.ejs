@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaShop</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
 <header class="header">
     <div class="container">
         <a href="/" class="logo">🛍️ MegaShop</a>
@@ -12,20 +23,33 @@
                         <%= typeof cartCount !== 'undefined' ? cartCount : 0 %>
                     </span>
                 </a>
-                <a href="/" id="logout-link" class="nav-link">Выйти</a>
+                <a href="/" id="logout-link" class="nav-link">Выйти (<%= session.user.login %>)</a>
             <% } else { %>
                 <a href="/register" class="nav-link">Войти</a>
             <% } %>
         </nav>
     </div>
 </header>
+
 <% if (session && session.user) { %>
     <script>
+        window.currentUser = {
+            id: <%- JSON.stringify(session.user.id) %>,
+            login: <%- JSON.stringify(session.user.login) %>
+        };
+
         document.getElementById('logout-link')?.addEventListener('click', async (e) => {
             e.preventDefault();
-            const res = await fetch('api/auth/logout', { method: 'POST' });
-            const result = await res.json();
+            const res = await fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'same-origin'
+            });
             if (res.ok) window.location.href = '/';
         });
+    </script>
+<% } else { %>
+    <script>
+        // Для гостей
+        window.currentUser = { id: null, login: 'Гость' };
     </script>
 <% } %>

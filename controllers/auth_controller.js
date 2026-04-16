@@ -111,6 +111,9 @@ async function loginUser(req, res) {
       id: userIndex + 1
     };
 
+    console.log('Session created:', req.session.user);
+    console.log('Session ID:', req.sessionID);
+
     if (!Array.isArray(req.session.cart)) {
       req.session.cart = [];
     }
